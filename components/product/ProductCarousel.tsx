@@ -65,7 +65,40 @@ const BannerCarousel: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <p>Chargement...</p>;
+    return (
+      <div className="h-96 relative w-full md:w-1/2 bg-gray-200 mx-auto md:rounded-lg">
+        {/* Carousel Container */}
+        <div
+          className="grid grid-cols-1 md:grid-cols-2 md:rounded-lg overflow-hidden"
+          style={{
+            boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.3)",
+            maxHeight: "500px",
+          }}
+        >
+          {/* Image Skeleton */}
+          <div className="animate-pulse bg-gray-300 w-full h-full md:ml-32"></div>
+
+          {/* Overlay Skeleton */}
+          <div className="absolute p-8 md:p-16 inset-0 flex flex-col justify-center items-center md:items-end text-left bg-gray-700 bg-opacity-50 transition-opacity duration-300 md:order-1">
+            <div className="animate-pulse h-8 md:h-10 w-3/4 bg-gray-400 mb-4"></div>
+            <div className="animate-pulse h-6 md:h-8 w-1/2 bg-gray-400 mb-6"></div>
+            <div className="animate-pulse h-10 w-full bg-green-600 rounded-md"></div>
+          </div>
+        </div>
+
+        {/* Navigation Skeleton */}
+        <div className="absolute top-1/2 left-4 transform -translate-y-1/2">
+          <div className="animate-pulse p-2 bg-gray-600 text-white font-bold rounded-full focus:outline-none focus:ring-2 focus:ring-gray-600">
+            &lt;
+          </div>
+        </div>
+        <div className="absolute top-1/2 right-4 transform -translate-y-1/2">
+          <div className="animate-pulse p-2 bg-gray-600 text-white font-bold rounded-full focus:outline-none focus:ring-2 focus:ring-gray-600">
+            &gt;
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

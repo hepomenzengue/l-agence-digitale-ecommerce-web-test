@@ -7,5 +7,9 @@ export async function getCategories() {
   return getRequest("products/categories");
 }
 export async function getTopsCategories() {
-  return getRequest("products/category/tops");
+  return getRequest("products/category/tops?select=images,title,price");
+}
+
+export async function getAllProducts() {
+  return getRequest("products?select=images,title,price,meta");
 }
