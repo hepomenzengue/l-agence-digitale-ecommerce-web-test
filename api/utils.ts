@@ -24,6 +24,8 @@ export async function getRequest(
     },
   };
 
+  console.log(`${apiConstant}/${path}`);
+
   const response = await fetch(`${apiConstant}/${path}`, {
     ...config,
     method: "GET",
@@ -31,7 +33,7 @@ export async function getRequest(
 
   // Throw an error if the response is not OK
   if (!response.ok) {
-    throw new Error(`Failed to fetch: ${response.statusText}`);
+    console.log(response);
   }
 
   // Return the response data as JSON

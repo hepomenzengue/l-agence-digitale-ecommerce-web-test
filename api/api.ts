@@ -13,3 +13,7 @@ export async function getTopsCategories() {
 export async function getAllProducts() {
   return getRequest("products?select=images,title,price,meta");
 }
+
+export async function getProductsByCategory(category: string) {
+  return getRequest(`products/category/${category}?select=images,title,price`);
+}

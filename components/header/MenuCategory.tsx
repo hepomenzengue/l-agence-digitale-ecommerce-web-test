@@ -1,5 +1,6 @@
 // Importing React, useState, useEffect
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { getCategories } from "../../api/api";
 import Link from "next/link";
 
@@ -13,11 +14,22 @@ function MenuCategory() {
   // State to manage dropdown open/close
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [fetchingCategories, setFetchingCategories] = useState(false);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  // Toggle dropdown function
+  const onClickCategory = (category: string) => {
+    setIsDropdownOpen(false);
+    router.push(`/products/${category}`);
+  };
 
   // Toggle dropdown function
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+    if (!isDropdownOpen) {
+      setFetchingCategories(true); // Commence à charger les catégories
+    }
   };
 
   useEffect(() => {
@@ -29,22 +41,6 @@ function MenuCategory() {
       .catch((error) => {
         setLoading(false);
       });
-
-    // function handle closing dropdown when clicking outside
-    const handleClickOutside = (event: MouseEvent) => {
-      const dropdown = document.getElementById("mega-menu-dropdown-button");
-      if (dropdown && !dropdown.contains(event.target as Node)) {
-        setIsDropdownOpen(false);
-      }
-    };
-
-    // Event listener for mousedown event
-    document.addEventListener("mousedown", handleClickOutside);
-
-    // Cleanup function to remove event listener
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
   }, []);
 
   // JSX for MenuCategory component
@@ -93,11 +89,14 @@ function MenuCategory() {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-50">
           {categories.map((category: Category) => (
             <div
+              onClick={() => {
+                onClickCategory(category.slug);
+              }}
               key={category.slug}
               className="p-4 pb-0 text-gray-900 dark:text-white"
             >
               <Link
-                href={"#"}
+                href={`/products/${category.slug}`}
                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-green-600 dark:hover:text-white rounded-lg"
               >
                 {category.name}

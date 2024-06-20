@@ -51,7 +51,7 @@ const Categories = () => {
             {categories.map((category: Category) => (
               <li key={category.slug}>
                 <Link
-                  href="#"
+                  href={`/products/${category.slug}`}
                   className="flex items-center p-3 text-base font-bold text-gray-500 rounded-bl-lg rounded-tl-none border-l border-b  border-green-600 bg-white hover:bg-white group hover:shadow dark:bg-white dark:hover:bg-white dark:text-white"
                 >
                   <svg

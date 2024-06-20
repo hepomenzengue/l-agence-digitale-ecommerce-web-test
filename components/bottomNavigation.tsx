@@ -19,9 +19,23 @@ const BottomNavigation = () => {
     setActivePath(pathname);
   }, [pathname]);
 
+  const isActivePath = (path: string[]): boolean => {
+    for (let i = 0; i < path.length; i++) {
+      if (
+        (activePath.startsWith(path[i]) &&
+          activePath.substring(0, path[i].length) === path[i] &&
+          path[i].length > 1) ||
+        activePath === path[i]
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   // Fonction pour déterminer si un bouton de navigation est actif
   const isActive = (path: string[]): IsActiveProps => {
-    return path.includes(activePath)
+    return isActivePath(path)
       ? {
           buttonClass: "bg-green-600",
           svgClass: "text-white",
@@ -47,7 +61,7 @@ const BottomNavigation = () => {
           path="/"
         />
         <NavigationButton
-          isActive={isActive(["/categories"])}
+          isActive={isActive(["/categories", "/products"])}
           label="Catégories"
           viewBox="0 0 372.372 372.372"
           svgPath={
