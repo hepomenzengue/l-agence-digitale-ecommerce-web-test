@@ -17,3 +17,7 @@ export async function getAllProducts() {
 export async function getProductsByCategory(category: string) {
   return getRequest(`products/category/${category}?select=images,title,price`);
 }
+
+export async function getProductById(id: number) {
+  return getRequest(`products/${id}`);
+}

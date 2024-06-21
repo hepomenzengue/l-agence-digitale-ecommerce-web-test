@@ -1,12 +1,14 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Product {
   images: string[];
   title: string;
   price: string;
   slug: string;
+  id: number;
 }
 
 interface ProductList {
@@ -14,6 +16,7 @@ interface ProductList {
   loading: boolean;
 }
 const ProducList = ({ products, loading }: ProductList) => {
+  const router = useRouter();
   if (loading) {
     return (
       <>
@@ -51,7 +54,11 @@ const ProducList = ({ products, loading }: ProductList) => {
       {" "}
       {products &&
         products.map((product) => (
-          <Link key={product.slug} href={"#"} className="group">
+          <Link
+            key={product.slug}
+            href={`/productoverview/${product.id}`}
+            className="group"
+          >
             <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
               <Image
                 src={product.images[0]}
@@ -68,7 +75,12 @@ const ProducList = ({ products, loading }: ProductList) => {
             </h3>
             <p className="text-lg font-semibold text-gray-900 mt-1">{`${product.price} CFA`}</p>
 
-            <button className="mt-4 w-full px-6 py-2 bg-green-600 text-white rounded-md font-semibold shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600">
+            <button
+              onClick={() => {
+                router.push(`/productoverview/${product.id}`);
+              }}
+              className="mt-4 w-full px-6 py-2 bg-green-600 text-white rounded-md font-semibold shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600"
+            >
               Consulter le produit
             </button>
           </Link>

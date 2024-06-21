@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { getTopsCategories } from "../../api/api";
 
@@ -6,6 +7,7 @@ interface ImageData {
   images: string[];
   title: string;
   price: string;
+  id: number;
 }
 
 const BannerCarousel: React.FC = () => {
@@ -13,6 +15,7 @@ const BannerCarousel: React.FC = () => {
   const [transitioning, setTransitioning] = useState(false);
   const [images, setImages] = useState<ImageData[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const handlePrev = () => {
     setTransitioning(true);
@@ -135,7 +138,12 @@ const BannerCarousel: React.FC = () => {
           <p className="text-md md:text-2xl mb-6">
             {`${images[currentImageIndex].price} CFA`}
           </p>
-          <button className="px-6 py-3 bg-green-600 text-white rounded-md font-semibold shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600">
+          <button
+            onClick={() => {
+              router.push(`/productoverview/${images[currentImageIndex].id}`);
+            }}
+            className="px-6 py-3 bg-green-600 text-white rounded-md font-semibold shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600"
+          >
             Consulter le produit
           </button>
         </div>
