@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Carousel from "../Carousel";
 import { getProductById } from "../../api/api";
+import { useCart } from "../../context/CartContext";
 
 interface Product {
+  id: number;
   images: string[];
   title: string;
   price: string;
@@ -24,6 +26,7 @@ type Props = {
 
 function ProductOverview({ productId }: Props) {
   const [product, setProduct] = useState<Product>({
+    id: 0,
     images: [],
     title: "",
     price: "",
@@ -38,6 +41,8 @@ function ProductOverview({ productId }: Props) {
     stock: 0,
     returnPolicy: "",
   });
+  const { addToCart, removeFromCart, isInCart } = useCart();
+
   const [loading, setLoading] = useState(true);
 
   function roundNumber(nombre: number) {
@@ -47,6 +52,14 @@ function ProductOverview({ productId }: Props) {
       return Math.ceil(nombre);
     }
   }
+
+  const handleAddToCart = (product: Product) => {
+    addToCart(product);
+  };
+
+  const handleRemoveFromCart = (productId: number) => {
+    removeFromCart(productId);
+  };
 
   useEffect(() => {
     getProductById(productId)
@@ -230,12 +243,23 @@ function ProductOverview({ productId }: Props) {
                   ))}
             </div>
 
-            <button
-              type="button"
-              className="w-full mt-8 px-6 py-3 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-md"
-            >
-              Ajouter au panier
-            </button>
+            {!isInCart(product.id) ? (
+              <button
+                onClick={() => handleAddToCart(product)}
+                type="button"
+                className="w-full mt-8 px-6 py-3 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-md"
+              >
+                Ajouter au panier
+              </button>
+            ) : (
+              <button
+                onClick={() => handleRemoveFromCart(product.id)}
+                type="button"
+                className="w-full mt-8 px-6 py-3 bg-red-400 hover:bg-red-400 text-white text-sm font-semibold rounded-md"
+              >
+                Retirer du panier
+              </button>
+            )}
 
             <div className="mt-8">
               <h3 className="text-xl font-bold text-gray-800">

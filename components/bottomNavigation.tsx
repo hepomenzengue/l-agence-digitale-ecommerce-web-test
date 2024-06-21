@@ -61,7 +61,12 @@ const BottomNavigation = () => {
           path="/"
         />
         <NavigationButton
-          isActive={isActive(["/categories", "/products", "/productoverview"])}
+          isActive={isActive([
+            "/categories",
+            "/products",
+            "/productoverview",
+            "/cart",
+          ])}
           label="Boutique"
           viewBox="0 0 372.372 372.372"
           svgPath={

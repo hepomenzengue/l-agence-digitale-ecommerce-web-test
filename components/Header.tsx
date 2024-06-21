@@ -6,7 +6,6 @@ import MenuCategory from "./header/MenuCategory";
 import PhoneNumberAssistance from "./header/PhoneNumberAssistance";
 import Account from "./header/Account";
 import Cart from "./header/Cart";
-import CartAmount from "./header/CartAmount";
 
 export default function Header() {
   return (
@@ -14,7 +13,7 @@ export default function Header() {
       <div className="container  mx-auto px-4 py-8 flex    items-center">
         {/* Logo */}
         <div className="w-40 md:w-48   mr-auto flex-shrink-0 cursor-pointer">
-          <Link href="/">
+          <Link href={`/`}>
             <Image
               src="/logo.png"
               alt=""
@@ -44,8 +43,6 @@ export default function Header() {
             </li>
           </ul>
         </nav>
-        {/* Amount Added to cart block */}
-        <CartAmount />
       </div>
     </header>
   );
